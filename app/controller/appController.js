@@ -65,14 +65,17 @@ exports.create_a_user = function(req, res) {
   var new_user = new User(req.body);
 
   //handles null error
-  if (!new_user.email || !new_user.password) {
-    res
-      .status(400)
-      .send({ error: true, message: 'Please provide email/ password' });
+  if (!new_user || !new_user.email || !new_user.password) {
+    res.status(400).send({
+      isSuccessfull: false,
+      message: 'Please provide name/email/password'
+    });
   } else {
     User.createUser(new_user, function(err, user) {
-      if (err) res.send(err);
-      res.json(user);
+      if (err) res.send({ isSuccessfull: false, message: 'Error occured' });
+      res
+        .status(200)
+        .send({ isSuccessful: true, message: 'Success', user: new_user });
     });
   }
 };
