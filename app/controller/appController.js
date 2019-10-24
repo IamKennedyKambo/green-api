@@ -80,6 +80,26 @@ exports.create_a_user = function(req, res) {
   }
 };
 
+exports.login_a_user = function(req, res) {
+  var email = req.body.email;
+  var password = req.body.password;
+
+  //handles null error
+  if (!email || !password) {
+    res.status(400).send({
+      isSuccessful: false,
+      message: 'Please provide email/password'
+    });
+  } else {
+    User.loginUser(email, password, function(err, user) {
+      if (err) res.send({ isSuccessful: false, message: 'Error occured' });
+      res
+        .status(200)
+        .send({ isSuccessful: true, message: 'Success', user: user });
+    });
+  }
+};
+
 exports.read_a_user = function(req, res) {
   User.getUserById(req.params.userId, function(err, user) {
     if (err) res.send(err);

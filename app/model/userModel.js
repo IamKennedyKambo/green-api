@@ -24,6 +24,27 @@ User.createUser = function(newUser, result) {
     }
   });
 };
+
+User.loginUser = function(email, password, result) {
+  if (email && password) {
+    sql.query(
+      'SELECT * FROM users WHERE email = ? AND password = ?',
+      [email, password],
+      function(err, res) {
+        if (err) {
+          console.log('error: ', err);
+          result(err, null);
+        } else {
+          console.log(res.insertId);
+          result(null, res);
+        }
+      }
+    );
+  } else {
+    console.log('Invalid credentials');
+    result.send('Please enter Username and Password!');
+  }
+};
 User.getUserById = function(userId, result) {
   sql.query('Select * from users where id = ? ', userId, function(err, res) {
     if (err) {

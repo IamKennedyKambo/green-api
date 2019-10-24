@@ -20,6 +20,8 @@ module.exports = function(app) {
     .get(controller.list_all_users)
     .post(controller.create_a_user);
 
+  app.route('/users/login').post(controller.login_a_user);
+
   app
     .route('/users/:userId')
     .get(controller.read_a_user)
