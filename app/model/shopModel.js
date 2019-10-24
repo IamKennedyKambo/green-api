@@ -22,7 +22,7 @@ Shop.createShop = function(newShop, result) {
 };
 
 Shop.getShopById = function(shopId, result) {
-  sql.query('Select shop from shops where id = ? ', shopId, function(err, res) {
+  sql.query('Select * from shops where id = ? ', shopId, function(err, res) {
     if (err) {
       console.log('error: ', err);
       result(err, null);

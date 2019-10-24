@@ -20,7 +20,7 @@ Item.createItem = function(newItem, result) {
   });
 };
 Item.getItemById = function(itemId, result) {
-  sql.query('Select item from items where id = ? ', itemId, function(err, res) {
+  sql.query('Select * from items where id = ? ', itemId, function(err, res) {
     if (err) {
       console.log('error: ', err);
       result(err, null);
@@ -42,7 +42,7 @@ Item.getAllItems = function(result) {
   });
 };
 Item.updateById = function(id, item, result) {
-  sql.query('UPDATE items SET item = ? WHERE id = ?', [item.item, id], function(
+  sql.query('UPDATE items set item = ? WHERE id = ?', [item.item, id], function(
     err,
     res
   ) {
