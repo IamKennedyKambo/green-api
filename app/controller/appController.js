@@ -26,19 +26,22 @@ exports.create_a_user = function(req, res) {
   } else {
     User.createUser(new_user, function(err, user) {
       if (err) {
-        if (err.message == 'ER DUP ENTRY') {
-          res.status(400).send({
+        if (err.code == 'ER_DUP_ENTRY') {
+          res.send({
             isSuccessful: false,
-            message: 'Email exists, try a different one'
+            message: 'Email exists try a different one'
           });
-          console.log('Error = ${err}');
         } else {
-          res.send({ isSuccessful: false, message: 'Error occured' });
+          res.send({
+            isSuccessful: false,
+            message: `Error occured + ${err.code}`
+          });
         }
+      } else {
+        res
+          .status(200)
+          .send({ isSuccessful: true, message: 'Success', user: new_user });
       }
-      res
-        .status(200)
-        .send({ isSuccessful: true, message: 'Success', user: new_user });
     });
   }
 };
@@ -47,23 +50,15 @@ exports.login_a_user = function(req, res) {
   var email = req.body.email;
   var password = req.body.password;
 
-  //handles null error
-  if (!email || !password) {
-    res.status(400).send({
-      isSuccessful: false,
-      message: 'Please provide email/password'
-    });
-  } else {
-    User.loginUser(email, password, function(err, user) {
-      if (err) {
-        res.status(400).send({ isSuccessful: false, message: err });
-      } else {
-        res
-          .status(200)
-          .send({ isSuccessful: true, message: 'Success', user: user });
-      }
-    });
-  }
+  User.loginUser(email, password, function(err, user) {
+    if (err) {
+      res.send({ message: `Error + ${err.code}` });
+    } else {
+      res
+        .status(200)
+        .send({ isSuccessful: true, message: 'Success', user: user });
+    }
+  });
 };
 
 exports.read_a_user = function(req, res) {
@@ -140,7 +135,7 @@ exports.list_all_bins = function(req, res) {
     console.log('controller');
     if (err) res.send(err);
     console.log('res', bin);
-    res.status(200).send(bin);
+    res.status(200).send({isSuccessful: true, bins: bin});
   });
 };
 

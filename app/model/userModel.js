@@ -26,26 +26,22 @@ User.createUser = function(newUser, result) {
 };
 
 User.loginUser = function(email, password, result) {
-  if (email && password) {
-    sql.query(
-      'SELECT * FROM users WHERE email = ? AND password = ?',
-      [email, password],
-      function(err, res) {
-        if (err) {
-          console.log('error: ', err);
-          result(err, null);
-        } else {
-          console.log(res.insertId);
-          res.forEach(element => {
-            result(null, element);
-          });
-        }
+  sql.query(
+    'SELECT * FROM users WHERE email = ? AND password = ?',
+    [email, password],
+    function(err, res) {
+      if (err) {
+        console.log('error: ', err);
+        result(err, null);
+        res.end;
+      } else {
+        console.log(res.insertId);
+        res.forEach(element => {
+          result(null, element);
+        });
       }
-    );
-  } else {
-    console.log('Invalid credentials');
-    result.send('Please enter Username and Password!');
-  }
+    }
+  );
 };
 User.getUserById = function(userId, result) {
   sql.query('Select * from users where id = ? ', userId, function(err, res) {
@@ -64,7 +60,7 @@ User.getAllUsers = function(result) {
       console.log('error: ', err);
       result(null, err);
     } else {
-      console.log('tasks : ', res);
+      console.log('users : ', res);
 
       result(null, res);
     }
