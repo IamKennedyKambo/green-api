@@ -36,7 +36,9 @@ User.loginUser = function(email, password, result) {
           result(err, null);
         } else {
           console.log(res.insertId);
-          result(null, res);
+          res.forEach(element => {
+            result(null, element);
+          });
         }
       }
     );
