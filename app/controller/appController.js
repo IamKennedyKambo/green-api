@@ -1,56 +1,9 @@
 'use strict';
 
-var Task = require('../model/taskModel');
 var User = require('../model/userModel');
 var Shop = require('../model/shopModel');
 var Bin = require('../model/binModel');
 var Item = require('../model/itemModel');
-
-exports.list_all_tasks = function(req, res) {
-  Task.getAllTask(function(err, task) {
-    console.log('controller');
-    if (err) res.send(err);
-    console.log('res', task);
-    res.send(task);
-  });
-};
-
-exports.create_a_task = function(req, res) {
-  var new_task = new Task(req.body);
-
-  //handles null error
-  if (!new_task.task || !new_task.status) {
-    res
-      .status(400)
-      .send({ error: true, message: 'Please provide task/status' });
-  } else {
-    Task.createTask(new_task, function(err, task) {
-      if (err) res.send(err);
-      res.json(task);
-    });
-  }
-};
-
-exports.read_a_task = function(req, res) {
-  Task.getTaskById(req.params.taskId, function(err, task) {
-    if (err) res.send(err);
-    res.json(task);
-  });
-};
-
-exports.update_a_task = function(req, res) {
-  Task.updateById(req.params.taskId, new Task(req.body), function(err, task) {
-    if (err) res.send(err);
-    res.json(task);
-  });
-};
-
-exports.delete_a_task = function(req, res) {
-  Task.remove(req.params.taskId, function(err, task) {
-    if (err) res.send(err);
-    res.json({ message: 'Task successfully deleted' });
-  });
-};
 
 exports.list_all_users = function(req, res) {
   User.getAllUsers(function(err, user) {
@@ -68,11 +21,21 @@ exports.create_a_user = function(req, res) {
   if (!new_user || !new_user.email || !new_user.password) {
     res.status(400).send({
       isSuccessfull: false,
-      message: 'Please provide name/email/password'
+      message: 'Please provide all credentials'
     });
   } else {
     User.createUser(new_user, function(err, user) {
-      if (err) res.send({ isSuccessfull: false, message: 'Error occured' });
+      if (err) {
+        if (err.message == 'ER DUP ENTRY') {
+          res.status(400).send({
+            isSuccessful: false,
+            message: 'Email exists, try a different one'
+          });
+          console.log('Error = ${err}');
+        } else {
+          res.send({ isSuccessful: false, message: 'Error occured' });
+        }
+      }
       res
         .status(200)
         .send({ isSuccessful: true, message: 'Success', user: new_user });
@@ -92,10 +55,13 @@ exports.login_a_user = function(req, res) {
     });
   } else {
     User.loginUser(email, password, function(err, user) {
-      if (err) res.send({ isSuccessful: false, message: 'Error occured' });
-      res
-        .status(200)
-        .send({ isSuccessful: true, message: 'Success', user: user });
+      if (err) {
+        res.status(400).send({ isSuccessful: false, message: err });
+      } else {
+        res
+          .status(200)
+          .send({ isSuccessful: true, message: 'Success', user: user });
+      }
     });
   }
 };
