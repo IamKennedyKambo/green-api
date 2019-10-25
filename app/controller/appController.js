@@ -174,7 +174,7 @@ exports.list_all_bins = function(req, res) {
     console.log('controller');
     if (err) res.send(err);
     console.log('res', bin);
-    res.send(bin);
+    res.status(200).send({isSuccessful: true, bins: bin});
   });
 };
 
