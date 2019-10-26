@@ -88,7 +88,7 @@ exports.list_all_shops = function(req, res) {
     console.log('controller');
     if (err) res.send(err);
     console.log('res', shop);
-    res.send(shop);
+    res.status(200).send({isSuccessful: true, shops: shop});
   });
 };
 
@@ -133,9 +133,12 @@ exports.delete_a_shop = function(req, res) {
 exports.list_all_bins = function(req, res) {
   Bin.getAllBins(function(err, bin) {
     console.log('controller');
-    if (err) res.send(err);
-    console.log('res', bin);
-    res.status(200).send({isSuccessful: true, bins: bin});
+    if (err) {
+      res.send(err);
+    } else {
+      console.log('res', bin);
+      res.status(200).send({ isSuccessful: true, bins: bin });
+    }
   });
 };
 
@@ -182,7 +185,7 @@ exports.list_all_products = function(req, res) {
     console.log('controller');
     if (err) res.send(err);
     console.log('res', item);
-    res.send(item);
+    res.send({ isSuccessful: true, items: item });
   });
 };
 
@@ -202,10 +205,10 @@ exports.create_a_product = function(req, res) {
   }
 };
 
-exports.read_a_product = function(req, res) {
-  Item.getItemById(req.params.itemId, function(err, item) {
+exports.createCatalog = function(req, res) {
+  Item.getItemsByShopId(req.params.shopId, function(err, item) {
     if (err) res.send(err);
-    res.json(item);
+    res.status(200).send({ isSuccessful: true, items: item });
   });
 };
 

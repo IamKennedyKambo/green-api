@@ -48,7 +48,9 @@ module.exports = function(app) {
 
   app
     .route('/products/:productId')
-    .get(controller.read_a_product)
+    .get(controller.createCatalog)
     .put(controller.update_a_product)
     .delete(controller.delete_a_product);
+
+  app.route('/catalog/:shopId').get(controller.createCatalog);
 };

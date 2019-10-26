@@ -34,8 +34,7 @@ Bin.getAllBins = function(result) {
       console.log('error: ', err);
       result(null, err);
     } else {
-      console.log('tasks : ', res);
-
+      console.log('bins : ', res);
       result(null, res);
     }
   });
