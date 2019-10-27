@@ -31,6 +31,7 @@ exports.create_a_user = function(req, res) {
             isSuccessful: false,
             message: 'Email exists try a different one'
           });
+          return;
         } else {
           res.send({
             isSuccessful: false,
@@ -71,13 +72,11 @@ exports.read_a_user = function(req, res) {
 exports.update_a_user = function(req, res) {
   User.updateById(req.params.userId, new User(req.body), function(err, user) {
     if (err) res.send(err);
-    res
-      .status(200)
-      .send({
-        isSuccessful: true,
-        message: 'Success',
-        user: new User(req.body)
-      });
+    res.status(200).send({
+      isSuccessful: true,
+      message: 'Success',
+      user: new User(req.body)
+    });
   });
 };
 
