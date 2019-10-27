@@ -71,7 +71,13 @@ exports.read_a_user = function(req, res) {
 exports.update_a_user = function(req, res) {
   User.updateById(req.params.userId, new User(req.body), function(err, user) {
     if (err) res.send(err);
-    res.json(user);
+    res
+      .status(200)
+      .send({
+        isSuccessful: true,
+        message: 'Success',
+        user: new User(req.body)
+      });
   });
 };
 
@@ -88,7 +94,7 @@ exports.list_all_shops = function(req, res) {
     console.log('controller');
     if (err) res.send(err);
     console.log('res', shop);
-    res.status(200).send({isSuccessful: true, shops: shop});
+    res.status(200).send({ isSuccessful: true, shops: shop });
   });
 };
 

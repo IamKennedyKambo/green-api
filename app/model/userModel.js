@@ -70,11 +70,12 @@ User.getAllUsers = function(result) {
 
 User.updateById = function(id, user, result) {
   sql.query(
-    'UPDATE users set name = ?, email = ?, password = ?, latitude = ?, longitude = ?, usable_points = ?, available_points =?, level = ?, cardId = ? WHERE id = ?',
+    'UPDATE users set name = ?, email = ?, password = ?, about = ?, latitude = ?, longitude = ?, usable_points = ?, available_points =?, level = ?, cardId = ? WHERE id = ?',
     [
       user.name,
       user.email,
       user.password,
+      user.about,
       user.latitude,
       user.longitude,
       user.usable_points,
