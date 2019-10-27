@@ -8,7 +8,8 @@ var Item = function(item) {
     (this.price = item.price),
     (this.image = item.image),
     (this.points = item.points),
-    (this.code = item.code);
+    (this.code = item.code),
+    (this.description = item.description);
 };
 
 Item.createItem = function(newItem, result) {
@@ -50,8 +51,16 @@ Item.getItemsByShopId = function(shopId, result) {
 
 Item.updateById = function(id, item, result) {
   sql.query(
-    'UPDATE items set name = ?, price = ?, image = ?, points = ?, code = ? WHERE id = ?',
-    [item.name, item.price, item.image, item.points, item.code, id],
+    'UPDATE items set name = ?, price = ?, image = ?, points = ?, code = ?, description = ? WHERE id = ?',
+    [
+      item.name,
+      item.price,
+      item.image,
+      item.points,
+      item.code,
+      item.description,
+      id
+    ],
     function(err, res) {
       if (err) {
         console.log('error: ', err);
