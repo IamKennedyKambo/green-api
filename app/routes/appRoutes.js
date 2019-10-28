@@ -1,6 +1,7 @@
 'use strict';
 module.exports = function(app) {
   var controller = require('../controller/appController');
+  var User = require('../model/userModel');
 
   //user routes
   app

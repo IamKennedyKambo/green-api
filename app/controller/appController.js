@@ -51,13 +51,34 @@ exports.login_a_user = function(req, res) {
   var email = req.body.email;
   var password = req.body.password;
 
-  User.loginUser(email, password, function(err, user) {
+  User.login(email, function(err, user) {
     if (err) {
-      res.send({ message: `Error + ${err.code}` });
+      // console.log("error ocurred",error);
+      res.status(400).send({
+        isSuccessful: false,
+        message: 'error ocurred'
+      });
     } else {
-      res
-        .status(200)
-        .send({ isSuccessful: true, message: 'Success', user: user });
+      // console.log('The solution is: ', results);
+      if (user.length > 0) {
+        if (user[0].password == password) {
+          res.status(200).send({
+            isSuccessful: true,
+            message: 'Success',
+            user: user
+          });
+        } else {
+          res.status(204).send({
+            isSuccessful: false,
+            message: 'Email and password does not match'
+          });
+        }
+      } else {
+        res.status(204).send({
+          isSuccessful: false,
+          message: 'Email does not exist'
+        });
+      }
     }
   });
 };

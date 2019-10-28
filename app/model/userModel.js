@@ -26,24 +26,52 @@ User.createUser = function(newUser, result) {
   });
 };
 
-User.loginUser = function(email, password, result) {
-  sql.query(
-    'SELECT * FROM users WHERE email = ? AND password = ?',
-    [email, password],
-    function(err, res) {
-      if (err) {
-        console.log('error: ', err);
-        result(err, null);
-        res.end;
+User.loginUser = function(email, result) {
+  sql.query('SELECT * FROM users WHERE email = ?', [email], function(err, res) {
+    if (err) {
+      console.log('error: ', err);
+      result(err, null);
+    } else {
+      console.log(res.insertId);
+      res.forEach(element => {
+        result(null, element);
+      });
+
+      if (results.length > 0) {
+        if (results[0].password == password) {
+          res.send({
+            code: 200,
+            success: 'login sucessfull'
+          });
+        } else {
+          res.send({
+            code: 204,
+            success: 'Email and password does not match'
+          });
+        }
       } else {
-        console.log(res.insertId);
-        res.forEach(element => {
-          result(null, element);
+        res.send({
+          code: 204,
+          success: 'Email does not exits'
         });
       }
     }
-  );
+  });
 };
+
+User.login = function(email, result) {
+  sql.query('SELECT * FROM users WHERE email = ?', [email], function(
+    error,
+    results
+  ) {
+    if (error) {
+      result(error, null);
+    } else {
+      result(null, results);
+    }
+  });
+};
+
 User.getUserById = function(userId, result) {
   sql.query('Select * from users where id = ? ', userId, function(err, res) {
     if (err) {
