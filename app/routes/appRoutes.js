@@ -1,31 +1,30 @@
 'use strict';
 module.exports = function(app) {
   var controller = require('../controller/appController');
-  var User = require('../model/userModel');
 
   //user routes
   app
     .route('/users')
-    .get(controller.list_all_users)
-    .post(controller.create_a_user);
+    .get(controller.list_users)
+    .post(controller.create_user);
 
-  app.route('/users/login').post(controller.login_a_user);
+  app.route('/users/login').post(controller.login_user);
 
   app
     .route('/users/:userId')
-    .get(controller.read_a_user)
-    .put(controller.update_a_user)
-    .delete(controller.delete_a_user);
+    .get(controller.get_user)
+    .put(controller.update_user)
+    .delete(controller.delete_user);
 
   //shop routes
   app
     .route('/shops')
-    .get(controller.list_all_shops)
+    .get(controller.list_shops)
     .post(controller.create_a_shop);
 
   app
     .route('/shops/:shopId')
-    .get(controller.read_a_shop)
+    .get(controller.get_a_shop)
     .put(controller.update_a_shop)
     .delete(controller.delete_a_shop);
 
@@ -37,14 +36,14 @@ module.exports = function(app) {
 
   app
     .route('/bins/:binId')
-    .get(controller.read_a_bin)
+    .get(controller.get_a_bin)
     .put(controller.update_a_bin)
     .delete(controller.delete_a_bin);
 
   //item routes
   app
     .route('/products')
-    .get(controller.list_all_products)
+    .get(controller.list_products)
     .post(controller.create_a_product);
 
   app
@@ -52,6 +51,10 @@ module.exports = function(app) {
     .get(controller.createCatalog)
     .put(controller.update_a_product)
     .delete(controller.delete_a_product);
+
+  app.route('/cart/:userId').get(controller.createCart);
+
+  app.route('/cart').post(controller.create_entry);
 
   app.route('/catalog/:shopId').get(controller.createCatalog);
 };

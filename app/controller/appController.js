@@ -4,9 +4,10 @@ var User = require('../model/userModel');
 var Shop = require('../model/shopModel');
 var Bin = require('../model/binModel');
 var Item = require('../model/itemModel');
+var Cart = require('../model/cartModel');
 
-exports.list_all_users = function(req, res) {
-  User.getAllUsers(function(err, user) {
+exports.list_users = function(req, res) {
+  User.getUsers(function(err, user) {
     console.log('controller');
     if (err) res.send(err);
     console.log('res', user);
@@ -14,7 +15,7 @@ exports.list_all_users = function(req, res) {
   });
 };
 
-exports.create_a_user = function(req, res) {
+exports.create_user = function(req, res) {
   var new_user = new User(req.body);
 
   //handles null error
@@ -47,11 +48,11 @@ exports.create_a_user = function(req, res) {
   }
 };
 
-exports.login_a_user = function(req, res) {
+exports.login_user = function(req, res) {
   var email = req.body.email;
   var password = req.body.password;
 
-  User.login(email, function(err, user) {
+  User.loginUser(email, function(err, user) {
     if (err) {
       // console.log("error ocurred",error);
       res.status(400).send({
@@ -83,14 +84,14 @@ exports.login_a_user = function(req, res) {
   });
 };
 
-exports.read_a_user = function(req, res) {
+exports.get_user = function(req, res) {
   User.getUserById(req.params.userId, function(err, user) {
     if (err) res.send(err);
     res.json(user);
   });
 };
 
-exports.update_a_user = function(req, res) {
+exports.update_user = function(req, res) {
   User.updateById(req.params.userId, new User(req.body), function(err, user) {
     if (err) res.send(err);
     res.status(200).send({
@@ -101,7 +102,7 @@ exports.update_a_user = function(req, res) {
   });
 };
 
-exports.delete_a_user = function(req, res) {
+exports.delete_user = function(req, res) {
   User.remove(req.params.userId, function(err, task) {
     if (err) res.send(err);
     res.json({ message: 'User successfully deleted' });
@@ -109,7 +110,7 @@ exports.delete_a_user = function(req, res) {
 };
 
 //Shops
-exports.list_all_shops = function(req, res) {
+exports.list_shops = function(req, res) {
   Shop.getAllShops(function(err, shop) {
     console.log('controller');
     if (err) res.send(err);
@@ -134,7 +135,7 @@ exports.create_a_shop = function(req, res) {
   }
 };
 
-exports.read_a_shop = function(req, res) {
+exports.get_a_shop = function(req, res) {
   Shop.getShopById(req.params.shopId, function(err, shop) {
     if (err) res.send(err);
     res.json(shop);
@@ -157,7 +158,7 @@ exports.delete_a_shop = function(req, res) {
 
 //Bins
 exports.list_all_bins = function(req, res) {
-  Bin.getAllBins(function(err, bin) {
+  Bin.getBins(function(err, bin) {
     console.log('controller');
     if (err) {
       res.send(err);
@@ -184,7 +185,7 @@ exports.create_a_bin = function(req, res) {
   }
 };
 
-exports.read_a_bin = function(req, res) {
+exports.get_a_bin = function(req, res) {
   Bin.getBinById(req.params.binId, function(err, bin) {
     if (err) res.send(err);
     res.json(bin);
@@ -206,8 +207,8 @@ exports.delete_a_bin = function(req, res) {
 };
 
 //Products
-exports.list_all_products = function(req, res) {
-  Item.getAllItems(function(err, item) {
+exports.list_products = function(req, res) {
+  Item.getItems(function(err, item) {
     console.log('controller');
     if (err) res.send(err);
     console.log('res', item);
@@ -249,5 +250,52 @@ exports.delete_a_product = function(req, res) {
   Item.remove(req.params.itemId, function(err, task) {
     if (err) res.send(err);
     res.json({ message: 'Item successfully deleted' });
+  });
+};
+
+//Cart
+exports.list_carts = function(req, res) {
+  Cart.getCart(function(err, item) {
+    console.log('controller');
+    if (err) res.send(err);
+    console.log('res', item);
+    res.send({ isSuccessful: true, items: item });
+  });
+};
+
+exports.create_entry = function(req, res) {
+  var new_item = new Cart(req.body);
+
+  //handles null error
+  if (!new_item) {
+    res
+      .status(400)
+      .send({ error: true, message: 'Please provide item details' });
+  } else {
+    Cart.createEntry(new_item, function(err, cart) {
+      if (err) res.send(err);
+      res.json(cart);
+    });
+  }
+};
+
+exports.createCart = function(req, res) {
+  Cart.getCartByUserId(req.params.userId, function(err, cart) {
+    if (err) res.send(err);
+    res.status(200).send({ isSuccessful: true, cart: cart });
+  });
+};
+
+exports.update_entry = function(req, res) {
+  Cart.updateById(req.params.cartId, new Cart(req.body), function(err, cart) {
+    if (err) res.send(err);
+    res.json(cart);
+  });
+};
+
+exports.delete_entry = function(req, res) {
+  Cart.remove(req.params.cartId, function(err, cart) {
+    if (err) res.send(err);
+    res.json({ message: 'Cart successfully deleted' });
   });
 };
