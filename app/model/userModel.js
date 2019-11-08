@@ -19,6 +19,7 @@ User.createUser = function(newUser, result) {
     if (err) {
       console.log('error: ', err);
       result(err, null);
+      return;
     } else {
       console.log(res.insertId);
       result(null, res.insertId);
@@ -66,8 +67,9 @@ User.loginUser = function(email, result) {
   ) {
     if (error) {
       result(error, null);
+      return;
     } else {
-      res.forEach(element => {
+      results.forEach(element => {
         result(null, element);
       });
     }
@@ -79,6 +81,7 @@ User.getUserById = function(userId, result) {
     if (err) {
       console.log('error: ', err);
       result(err, null);
+      return;
     } else {
       result(null, res);
     }
@@ -90,6 +93,7 @@ User.getUsers = function(result) {
     if (err) {
       console.log('error: ', err);
       result(null, err);
+      return;
     } else {
       console.log('users : ', res);
 
@@ -118,6 +122,7 @@ User.updateById = function(id, user, result) {
       if (err) {
         console.log('error: ', err);
         result(null, err);
+        return;
       } else {
         result(null, res);
       }
@@ -129,6 +134,7 @@ User.remove = function(id, result) {
     if (err) {
       console.log('error: ', err);
       result(null, err);
+      return;
     } else {
       result(null, res);
     }

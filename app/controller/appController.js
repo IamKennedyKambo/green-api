@@ -60,26 +60,11 @@ exports.login_user = function(req, res) {
         message: 'error ocurred'
       });
     } else {
-      console.log('The solution is: ', user);
-      if (user.length > 0) {
-        if (user[0].password == password) {
-          res.status(200).send({
-            isSuccessful: true,
-            message: 'Success',
-            user: user
-          });
-        } else {
-          res.status(204).send({
-            isSuccessful: false,
-            message: 'Email and password does not match'
-          });
-        }
-      } else {
-        res.status(204).send({
-          isSuccessful: false,
-          message: 'Email does not exist'
-        });
-      }
+      res.status(200).send({
+        isSuccessful: true,
+        message: 'Success',
+        user: user
+      });
     }
   });
 };
