@@ -67,7 +67,9 @@ User.loginUser = function(email, result) {
     if (error) {
       result(error, null);
     } else {
-      result(null, results);
+      res.forEach(element => {
+        result(null, element);
+      });
     }
   });
 };
