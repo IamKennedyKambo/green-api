@@ -60,7 +60,7 @@ exports.login_user = function(req, res) {
         message: 'error ocurred'
       });
     } else {
-      // console.log('The solution is: ', results);
+      console.log('The solution is: ', user);
       if (user.length > 0) {
         if (user[0].password == password) {
           res.status(200).send({
