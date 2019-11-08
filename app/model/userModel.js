@@ -26,48 +26,71 @@ User.createUser = function(newUser, result) {
   });
 };
 
-// User.loginUser = function(email, result) {
-//   sql.query('SELECT * FROM users WHERE email = ?', [email], function(err, res) {
-//     if (err) {
-//       console.log('error: ', err);
-//       result(err, null);
-//     } else {
-//       console.log(res.insertId);
-//       res.forEach(element => {
-//         result(null, element);
-//       });
+User.loginUser = function(email, result) {
+  sql.query('SELECT * FROM users WHERE email = ?', [email], function(err, res) {
+    if (err) {
+      console.log('error: ', err);
+      result(err, null);
+    } else {
+      console.log(res.insertId);
+      res.forEach(element => {
+        result(null, element);
+      });
 
-//       if (results.length > 0) {
-//         if (results[0].password == password) {
-//           res.send({
-//             code: 200,
-//             success: 'login sucessfull'
-//           });
-//         } else {
-//           res.send({
-//             code: 204,
-//             success: 'Email and password does not match'
-//           });
-//         }
-//       } else {
-//         res.send({
-//           code: 204,
-//           success: 'Email does not exits'
-//         });
-//       }
-//     }
-//   });
-// };
+      if (results.length > 0) {
+        if (results[0].password == password) {
+          res.send({
+            code: 200,
+            success: 'login sucessfull'
+          });
+        } else {
+          res.send({
+            code: 204,
+            success: 'Email and password does not match'
+          });
+        }
+      } else {
+        res.send({
+          code: 204,
+          success: 'Email does not exits'
+        });
+      }
+    }
+  });
+};
 
 User.loginUser = function(email, result) {
   sql.query('SELECT * FROM users WHERE email = ?', [email], function(
-    error,
+    err,
     results
   ) {
-    if (error) {
-      result(error, null);
+    if (err) {
+      console.log('error: ', err);
+      result(err, null);
     } else {
-      result(null, results);
+      console.log(res.insertId);
+      res.forEach(element => {
+        result(null, element);
+      });
+
+      if (results.length > 0) {
+        if (results[0].password == password) {
+          res.send({
+            code: 200,
+            success: 'login sucessfull'
+          });
+        } else {
+          res.send({
+            code: 204,
+            success: 'Email and password does not match'
+          });
+        }
+      } else {
+        res.send({
+          code: 204,
+          success: 'Email does not exits'
+        });
+      }
     }
   });
 };
