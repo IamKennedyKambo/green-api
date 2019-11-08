@@ -28,7 +28,7 @@ Bin.getBinById = function(binId, result) {
     }
   });
 };
-Bin.getAllBins = function(result) {
+Bin.getBins = function(result) {
   sql.query('Select * from bins', function(err, res) {
     if (err) {
       console.log('error: ', err);
