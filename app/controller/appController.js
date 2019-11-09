@@ -40,9 +40,15 @@ exports.create_user = function(req, res) {
           });
         }
       } else {
+        var newUser = {
+          id: user,
+          name: new_user.name,
+          email: new_user.email,
+          password: new_user.password
+        };
         res
           .status(200)
-          .send({ isSuccessful: true, message: 'Success', user: new_user });
+          .send({ isSuccessful: true, message: 'Success', user: newUser });
       }
     });
   }
