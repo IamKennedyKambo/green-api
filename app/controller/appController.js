@@ -66,11 +66,18 @@ exports.login_user = function(req, res) {
         message: 'error ocurred'
       });
     } else {
-      res.status(200).send({
-        isSuccessful: true,
-        message: 'Success',
-        user: user
-      });
+      if (password === user.password) {
+        res.status(200).send({
+          isSuccessful: true,
+          message: 'Success',
+          user: user
+        });
+      } else {
+        res.status(401).send({
+          isSuccessful: false,
+          message: 'Wrong password, try again'
+        });
+      }
     }
   });
 };
