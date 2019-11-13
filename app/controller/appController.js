@@ -60,11 +60,12 @@ exports.login_user = function(req, res) {
 
   User.loginUser(email, function(err, user) {
     if (err) {
-      // console.log("error ocurred",error);
+      console.log('error ocurred', error);
       res.status(400).send({
         isSuccessful: false,
-        message: 'error ocurred'
+        message: `error ocurred + ${err.code}`
       });
+      res.end();
     } else {
       if (password === user.password) {
         res.status(200).send({
@@ -72,11 +73,13 @@ exports.login_user = function(req, res) {
           message: 'Success',
           user: user
         });
+        res.end();
       } else {
         res.status(401).send({
           isSuccessful: false,
           message: 'Wrong password, try again'
         });
+        res.end();
       }
     }
   });

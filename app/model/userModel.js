@@ -67,7 +67,8 @@ User.loginUser = function(email, result) {
   ) {
     if (error) {
       result(error, null);
-      return;
+      console.log('error: ', err);
+      throw err;
     } else {
       results.forEach(element => {
         result(null, element);
