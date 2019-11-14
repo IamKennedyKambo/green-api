@@ -95,7 +95,11 @@ exports.login_user = function(req, res) {
 exports.get_user = function(req, res) {
   User.getUserById(req.params.userId, function(err, user) {
     if (err) res.send(err);
-    res.json(user);
+    res.status(200).send({
+      isSuccessful: true,
+      message: 'Success',
+      user: user
+    });
   });
 };
 

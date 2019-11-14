@@ -66,7 +66,6 @@ User.getUsers = function(result) {
       return;
     } else {
       console.log('users : ', res);
-
       result(null, res);
     }
   });
