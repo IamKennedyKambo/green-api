@@ -59,6 +59,13 @@ exports.login_user = function(req, res) {
   var password = req.body.password;
 
   User.loginUser(email, function(err, user) {
+    if (user.length < 0) {
+      res.status(204).send({
+        sSuccessful: false,
+        message: 'Account does not exist'
+      });
+      res.end();
+    }
     if (err) {
       console.log('error ocurred', error);
       res.status(400).send({

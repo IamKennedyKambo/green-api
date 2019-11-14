@@ -9,6 +9,7 @@ var Cart = function(cart) {
     (this.price = cart.price),
     (this.image = cart.image),
     (this.points = cart.points),
+    (this.count = cart.count),
     (this.code = cart.code),
     (this.description = cart.description);
 };
@@ -53,12 +54,13 @@ Cart.getCartByUserId = function(userId, result) {
 
 Cart.updateById = function(id, cart, result) {
   sql.query(
-    'UPDATE cart set name = ?, price = ?, image = ?, points = ?, code = ?, description = ? WHERE id = ?',
+    'UPDATE cart set name = ?, price = ?, image = ?, points = ?, count = ?, code = ?, description = ? WHERE id = ?',
     [
       cart.name,
       cart.price,
       cart.image,
       cart.points,
+      cart.count,
       cart.code,
       cart.description,
       id
