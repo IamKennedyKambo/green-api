@@ -80,7 +80,7 @@ Cart.remove = function(id, result) {
   sql.query('DELETE FROM cart WHERE id = ?', [id], function(err, res) {
     if (err) {
       console.log('error: ', err);
-      result(null, err);
+      result(err, null);
     } else {
       result(null, res);
     }

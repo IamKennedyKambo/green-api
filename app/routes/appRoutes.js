@@ -54,9 +54,12 @@ module.exports = function(app) {
 
   app.route('/cart/:userId').get(controller.createCart);
 
-  app.route('/cart').get(controller.list_carts);
+  app
+    .route('/cart')
+    .post(controller.create_entry)
+    .get(controller.list_carts);
 
-  app.route('/cart').post(controller.create_entry);
+  app.route('/cart/:cartId').delete(controller.delete_entry);
 
   app.route('/catalog/:shopId').get(controller.createCatalog);
 };

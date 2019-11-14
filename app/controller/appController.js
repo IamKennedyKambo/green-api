@@ -317,6 +317,8 @@ exports.update_entry = function(req, res) {
 exports.delete_entry = function(req, res) {
   Cart.remove(req.params.cartId, function(err, cart) {
     if (err) res.send(err);
-    res.json({ message: 'Cart successfully deleted' });
+    res
+      .status(200)
+      .send({ isSuccessful: true, message: 'Cart successfully deleted' });
   });
 };
