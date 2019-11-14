@@ -51,7 +51,9 @@ User.getUserById = function(userId, result) {
       result(err, null);
       return;
     } else {
-      result(null, res);
+      res.forEach(element => {
+        result(null, element);
+      });
     }
   });
 };
@@ -89,7 +91,7 @@ User.updateById = function(id, user, result) {
     function(err, res) {
       if (err) {
         console.log('error: ', err);
-        result(null, err);
+        result(err, null);
         return;
       } else {
         result(null, res);
@@ -97,11 +99,12 @@ User.updateById = function(id, user, result) {
     }
   );
 };
+
 User.remove = function(id, result) {
   sql.query('DELETE FROM users WHERE id = ?', [id], function(err, res) {
     if (err) {
       console.log('error: ', err);
-      result(null, err);
+      result(err, null);
       return;
     } else {
       result(null, res);

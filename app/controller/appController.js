@@ -101,12 +101,21 @@ exports.get_user = function(req, res) {
 
 exports.update_user = function(req, res) {
   User.updateById(req.params.userId, new User(req.body), function(err, user) {
-    if (err) res.send(err);
-    res.status(200).send({
-      isSuccessful: true,
-      message: 'Success',
-      user: new User(req.body)
-    });
+    if (err) {
+      res.status(400).send({
+        isSuccessful: false,
+        message: err
+      });
+    } else {
+      User.getUserById(req.params.userId, function(err, user) {
+        if (err) res.send(err);
+        res.status(200).send({
+          isSuccessful: true,
+          message: 'Success',
+          user: user
+        });
+      });
+    }
   });
 };
 
