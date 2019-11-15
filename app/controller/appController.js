@@ -59,13 +59,6 @@ exports.login_user = function(req, res) {
   var password = req.body.password;
 
   User.loginUser(email, function(err, user) {
-    if (user.length < 0) {
-      res.status(204).send({
-        sSuccessful: false,
-        message: 'Account does not exist'
-      });
-      res.end();
-    }
     if (err) {
       console.log('error ocurred', error);
       res.status(400).send({
@@ -316,9 +309,19 @@ exports.update_entry = function(req, res) {
 
 exports.delete_entry = function(req, res) {
   Cart.remove(req.params.cartId, function(err, cart) {
-    if (err) res.send(err);
-    res
-      .status(200)
-      .send({ isSuccessful: true, message: 'Cart successfully deleted' });
+    if (err) {
+      res.send(err);
+    } else {
+      Cart.getCartByUserId(req.body.userId, function(err, updated) {
+        if (err) {
+          res.send(err);
+        } else {
+          res.status(200).send({
+            isSuccessful: true,
+            cart: updated
+          });
+        }
+      });
+    }
   });
 };

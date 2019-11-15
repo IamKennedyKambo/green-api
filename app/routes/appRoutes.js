@@ -59,7 +59,7 @@ module.exports = function(app) {
     .post(controller.create_entry)
     .get(controller.list_carts);
 
-  app.route('/cart/:cartId').delete(controller.delete_entry);
+  app.route('/cart/:cartId').post(controller.delete_entry);
 
   app.route('/catalog/:shopId').get(controller.createCatalog);
 };
