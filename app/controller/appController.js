@@ -17,6 +17,7 @@ exports.list_users = function(req, res) {
 
 exports.create_user = function(req, res) {
   var new_user = new User(req.body);
+  console.log(new_user);
 
   //handles null error
   if (!new_user || !new_user.email || !new_user.password) {
