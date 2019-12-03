@@ -10,6 +10,8 @@ module.exports = function(app) {
 
   app.route('/users/login').post(controller.login_user);
 
+  app.route('/points/:cardId').post(controller.updateByCard);
+
   app
     .route('/users/:userId')
     .get(controller.get_user)

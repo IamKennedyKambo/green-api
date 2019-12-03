@@ -99,6 +99,32 @@ User.updateById = function(id, user, result) {
   );
 };
 
+User.updateByCard = function(cardId, points, result) {
+  sql.query('SELECT * from users where cardId = ?', [cardId], function(
+    err,
+    user
+  ) {
+    if (err) {
+      result(err, null);
+    } else {
+      user.forEach(element => {
+        var newUser = element;
+        for (var i = 0; i < newUser.length; ++i) {
+          var inc = newUser[i]['usable_points'];
+          newUser[i]['usable_points'] = inc + points;
+        }
+        User.updateById(element.id, newUser, function(err, res) {
+          if (err) {
+            result(err, null);
+          } else {
+            result(null, newUser);
+          }
+        });
+      });
+    }
+  });
+};
+
 User.remove = function(id, result) {
   sql.query('DELETE FROM users WHERE id = ?', [id], function(err, res) {
     if (err) {

@@ -116,6 +116,30 @@ exports.update_user = function(req, res) {
   });
 };
 
+exports.updateByCard = function(req, res) {
+  var points = req.body.points;
+  var cardId = req.params.cardId;
+  User.updateByCard(cardId, points, function(err, user) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.status(200).send({
+        isSuccessful: true,
+        user: user
+      });
+    }
+  });
+};
+
+var editUser = function(user, points) {
+  var newUser = user;
+  for (var i = 0; i < newUser.length; ++i) {
+    var inc = newUser[i]['usable_points'];
+    newUser[i]['usable_points'] = inc + points;
+  }
+  return newUser;
+};
+
 exports.delete_user = function(req, res) {
   User.remove(req.params.userId, function(err, task) {
     if (err) res.send(err);
@@ -312,7 +336,7 @@ exports.delete_entry = function(req, res) {
     if (err) {
       res.send(err);
     } else {
-      Cart.getCartByUserId(req.body.userId, function(err, updated) {
+      Cart.getCartByUserId(req.params.userId, function(err, updated) {
         if (err) {
           res.send(err);
         } else {
