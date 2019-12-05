@@ -11,7 +11,8 @@ var Cart = function(cart) {
     (this.points = cart.points),
     (this.count = cart.count),
     (this.code = cart.code),
-    (this.description = cart.description);
+    (this.description = cart.description),
+    (this.redeemed = cart.redeemed);
 };
 
 Cart.createEntry = function(newCart, result) {
@@ -63,6 +64,7 @@ Cart.updateById = function(id, cart, result) {
       cart.count,
       cart.code,
       cart.description,
+      cart.redeemed,
       id
     ],
     function(err, res) {
