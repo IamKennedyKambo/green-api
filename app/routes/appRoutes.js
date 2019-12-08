@@ -54,8 +54,7 @@ module.exports = function(app) {
     .put(controller.update_a_product)
     .delete(controller.delete_a_product);
 
-  app.route('/cart/:userId').get(controller.createCart);
-
+  //Cart routes
   app.route('/carts/:userId').post(controller.createCart);
 
   app
@@ -66,4 +65,10 @@ module.exports = function(app) {
   app.route('/cart/:cartId').post(controller.delete_entry);
 
   app.route('/catalog/:shopId').get(controller.createCatalog);
+
+  //News routes
+  app
+    .route('/news')
+    .get(controller.getMessages)
+    .post(controller.createMessage);
 };

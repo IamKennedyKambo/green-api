@@ -5,6 +5,7 @@ var Shop = require('../model/shopModel');
 var Bin = require('../model/binModel');
 var Item = require('../model/itemModel');
 var Cart = require('../model/cartModel');
+var Message = require('../model/NewsModel');
 
 exports.list_users = function(req, res) {
   User.getUsers(function(err, user) {
@@ -348,5 +349,25 @@ exports.delete_entry = function(req, res) {
         }
       });
     }
+  });
+};
+
+//News
+exports.createMessage = function(req, res) {
+  Message.createMessage(req.body, function(err, message) {
+    if (err) res.send(err);
+    res.status(200).send({
+      isSuccessful: true,
+      message: message
+    });
+  });
+};
+
+exports.getMessages = function(req, res) {
+  Message.getMessages(function(err, news) {
+    if (err) res.send(err);
+    res
+      .status(200)
+      .send({ isSuccessful: true, news: news, message: 'Success' });
   });
 };
