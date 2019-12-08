@@ -33,3 +33,5 @@ Message.getMessages = function(result) {
     }
   });
 };
+
+module.exports = Message;
