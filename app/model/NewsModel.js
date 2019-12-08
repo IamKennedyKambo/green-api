@@ -22,7 +22,7 @@ Message.createMessage = function(newItem, result) {
   });
 };
 
-Message.getAllMessages = function(result) {
+Message.getMessages = function(result) {
   sql.query('Select * from news', function(err, res) {
     if (err) {
       console.log('error: ', err);
