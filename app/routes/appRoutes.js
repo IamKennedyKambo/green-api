@@ -5,64 +5,64 @@ module.exports = function(app) {
   //user routes
   app
     .route('/users')
-    .get(controller.list_users)
-    .post(controller.create_user);
+    .get(controller.listUsers)
+    .post(controller.createUser);
 
-  app.route('/users/login').post(controller.login_user);
+  app.route('/users/login').post(controller.authenticateUser);
 
   app.route('/points/:cardId').post(controller.updateByCard);
 
   app
     .route('/users/:userId')
-    .get(controller.get_user)
-    .put(controller.update_user)
-    .delete(controller.delete_user);
+    .get(controller.getUser)
+    .put(controller.updateUser)
+    .delete(controller.deleteUser);
 
   //shop routes
   app
     .route('/shops')
-    .get(controller.list_shops)
-    .post(controller.create_a_shop);
+    .get(controller.listShops)
+    .post(controller.createShop);
 
   app
     .route('/shops/:shopId')
-    .get(controller.get_a_shop)
-    .put(controller.update_a_shop)
-    .delete(controller.delete_a_shop);
+    .get(controller.getShop)
+    .put(controller.updateShop)
+    .delete(controller.deleteShop);
 
   //bin routes
   app
     .route('/bins')
-    .get(controller.list_all_bins)
-    .post(controller.create_a_bin);
+    .get(controller.listBins)
+    .post(controller.createBin);
 
   app
     .route('/bins/:binId')
-    .get(controller.get_a_bin)
-    .put(controller.update_a_bin)
-    .delete(controller.delete_a_bin);
+    .get(controller.getBin)
+    .put(controller.updateBin)
+    .delete(controller.deleteBin);
 
   //item routes
   app
     .route('/products')
-    .get(controller.list_products)
-    .post(controller.create_a_product);
+    .get(controller.listProducts)
+    .post(controller.createProduct);
 
   app
     .route('/products/:productId')
     .get(controller.createCatalog)
-    .put(controller.update_a_product)
-    .delete(controller.delete_a_product);
+    .put(controller.updateProduct)
+    .delete(controller.deleteProduct);
 
   //Cart routes
   app.route('/carts/:userId').post(controller.createCart);
 
   app
     .route('/cart')
-    .post(controller.create_entry)
-    .get(controller.list_carts);
+    .post(controller.createEntry)
+    .get(controller.listCarts);
 
-  app.route('/cart/:cartId').post(controller.delete_entry);
+  app.route('/cart/:cartId').post(controller.deleteEntry);
 
   app.route('/catalog/:shopId').get(controller.createCatalog);
 

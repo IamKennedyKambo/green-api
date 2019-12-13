@@ -9,7 +9,7 @@ var User = function(user) {
     (this.latitude = user.latitude),
     (this.longitude = user.longitude),
     (this.usable_points = user.usable_points),
-    (this.available_points = user.available_points),
+    (this.used_points = user.used_points),
     (this.level = user.level),
     (this.cardId = user.cardId);
 };
@@ -73,16 +73,14 @@ User.getUsers = function(result) {
 
 User.updateById = function(id, user, result) {
   sql.query(
-    'UPDATE users set name = ?, email = ?, password = ?, about = ?, latitude = ?, longitude = ?, usable_points = ?, available_points =?, level = ?, cardId = ? WHERE id = ?',
+    'UPDATE users set name = ?, email = ?, password = ?, about = ?, usable_points = ?, used_points =?, level = ?, cardId = ? WHERE id = ?',
     [
       user.name,
       user.email,
       user.password,
       user.about,
-      user.latitude,
-      user.longitude,
       user.usable_points,
-      user.available_points,
+      user.used_points,
       user.level,
       user.cardId,
       id
