@@ -15,7 +15,7 @@ module.exports = function(app) {
   app
     .route('/users/:userId')
     .get(controller.getUser)
-    .put(controller.updateUser)
+    .put(controller.updateById)
     .delete(controller.deleteUser);
 
   //shop routes
