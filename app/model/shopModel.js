@@ -12,10 +12,8 @@ var Shop = function(shop) {
 Shop.createShop = function(newShop, result) {
   sql.query('INSERT INTO shops set ?', newShop, function(err, res) {
     if (err) {
-      console.log('error: ', err);
       result(err, null);
     } else {
-      console.log(res.insertId);
       result(null, res.insertId);
     }
   });
@@ -24,7 +22,6 @@ Shop.createShop = function(newShop, result) {
 Shop.getShopById = function(shopId, result) {
   sql.query('Select * from shops where id = ? ', shopId, function(err, res) {
     if (err) {
-      console.log('error: ', err);
       result(err, null);
     } else {
       result(null, res);
@@ -35,11 +32,8 @@ Shop.getShopById = function(shopId, result) {
 Shop.getAllShops = function(result) {
   sql.query('Select * from shops', function(err, res) {
     if (err) {
-      console.log('error: ', err);
       result(null, err);
     } else {
-      console.log('tasks : ', res);
-
       result(null, res);
     }
   });
@@ -51,7 +45,6 @@ Shop.updateById = function(id, shop, result) {
     res
   ) {
     if (err) {
-      console.log('error: ', err);
       result(null, err);
     } else {
       result(null, res);
@@ -62,7 +55,6 @@ Shop.updateById = function(id, shop, result) {
 Shop.remove = function(id, result) {
   sql.query('DELETE FROM shops WHERE id = ?', [id], function(err, res) {
     if (err) {
-      console.log('error: ', err);
       result(null, err);
     } else {
       result(null, res);

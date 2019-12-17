@@ -13,10 +13,8 @@ var Message = function(item) {
 Message.createMessage = function(newItem, result) {
   sql.query('INSERT INTO news set ?', newItem, function(err, res) {
     if (err) {
-      console.log('error: ', err);
       result(err, null);
     } else {
-      console.log(res.insertId);
       result(null, res.insertId);
     }
   });
@@ -25,10 +23,8 @@ Message.createMessage = function(newItem, result) {
 Message.getMessages = function(result) {
   sql.query('Select * from news', function(err, res) {
     if (err) {
-      console.log('error: ', err);
       result(null, err);
     } else {
-      console.log('items : ', res);
       result(null, res);
     }
   });

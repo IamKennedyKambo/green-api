@@ -18,10 +18,8 @@ var Cart = function(cart) {
 Cart.createEntry = function(newCart, result) {
   sql.query('INSERT INTO cart set ?', newCart, function(err, res) {
     if (err) {
-      console.log('error: ', err);
       result(err, null);
     } else {
-      console.log(res.insertId);
       result(null, res.insertId);
     }
   });
@@ -30,10 +28,8 @@ Cart.createEntry = function(newCart, result) {
 Cart.getCart = function(result) {
   sql.query('Select * from cart', function(err, res) {
     if (err) {
-      console.log('error: ', err);
       result(null, err);
     } else {
-      console.log('cart : ', res);
       result(null, res);
     }
   });
@@ -45,7 +41,6 @@ Cart.getCartByUserId = function(userId, result) {
     res
   ) {
     if (err) {
-      console.log('error: ', err);
       result(err, null);
     } else {
       result(null, res);
@@ -69,7 +64,6 @@ Cart.updateById = function(id, cart, result) {
     ],
     function(err, res) {
       if (err) {
-        console.log('error: ', err);
         result(null, err);
       } else {
         result(null, res);
@@ -81,7 +75,6 @@ Cart.updateById = function(id, cart, result) {
 Cart.remove = function(id, result) {
   sql.query('DELETE FROM cart WHERE id = ?', [id], function(err, res) {
     if (err) {
-      console.log('error: ', err);
       result(err, null);
     } else {
       result(null, res);

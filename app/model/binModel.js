@@ -10,10 +10,8 @@ var Bin = function(bin) {
 Bin.createBin = function(newBin, result) {
   sql.query('INSERT INTO bins set ?', newBin, function(err, res) {
     if (err) {
-      console.log('error: ', err);
       result(err, null);
     } else {
-      console.log(res.insertId);
       result(null, res.insertId);
     }
   });
@@ -21,7 +19,6 @@ Bin.createBin = function(newBin, result) {
 Bin.getBinById = function(binId, result) {
   sql.query('Select * from bins where id = ? ', binId, function(err, res) {
     if (err) {
-      console.log('error: ', err);
       result(err, null);
     } else {
       result(null, res);
@@ -31,10 +28,8 @@ Bin.getBinById = function(binId, result) {
 Bin.getBins = function(result) {
   sql.query('Select * from bins', function(err, res) {
     if (err) {
-      console.log('error: ', err);
       result(null, err);
     } else {
-      console.log('bins : ', res);
       result(null, res);
     }
   });
@@ -45,7 +40,6 @@ Bin.updateById = function(id, bin, result) {
     [bin.latitude, bin.longitude, bin.fill_level, id],
     function(err, res) {
       if (err) {
-        console.log('error: ', err);
         result(null, err);
       } else {
         result(null, res);
@@ -56,7 +50,6 @@ Bin.updateById = function(id, bin, result) {
 Bin.remove = function(id, result) {
   sql.query('DELETE FROM bins WHERE id = ?', [id], function(err, res) {
     if (err) {
-      console.log('error: ', err);
       result(null, err);
     } else {
       result(null, res);

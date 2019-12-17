@@ -17,11 +17,9 @@ var User = function(user) {
 User.createUser = function(newUser, result) {
   sql.query('INSERT INTO users set ? ', newUser, function(err, res) {
     if (err) {
-      console.log('error: ', err);
       result(err, null);
       return;
     } else {
-      console.log(res.insertId);
       result(null, res.insertId);
     }
   });
@@ -34,7 +32,6 @@ User.loginUser = function(email, result) {
   ) {
     if (error) {
       result(error, null);
-      console.log('error: ', err);
       throw err;
     } else {
       results.forEach(element => {
@@ -47,7 +44,6 @@ User.loginUser = function(email, result) {
 User.getUserById = function(userId, result) {
   sql.query('Select * from users where id = ? ', userId, function(err, res) {
     if (err) {
-      console.log('error: ', err);
       result(err, null);
       return;
     } else {
@@ -61,11 +57,9 @@ User.getUserById = function(userId, result) {
 User.getUsers = function(result) {
   sql.query('Select * from users', function(err, res) {
     if (err) {
-      console.log('error: ', err);
       result(null, err);
       return;
     } else {
-      console.log('users : ', res);
       result(null, res);
     }
   });
@@ -87,7 +81,6 @@ User.updateById = function(id, user, result) {
     ],
     function(err, res) {
       if (err) {
-        console.log('error: ', err);
         result(err, null);
         return;
       } else {
@@ -126,7 +119,6 @@ User.updateByCard = function(cardId, points, result) {
 User.remove = function(id, result) {
   sql.query('DELETE FROM users WHERE id = ?', [id], function(err, res) {
     if (err) {
-      console.log('error: ', err);
       result(err, null);
       return;
     } else {

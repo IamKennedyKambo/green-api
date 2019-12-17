@@ -15,10 +15,8 @@ var Item = function(item) {
 Item.createItem = function(newItem, result) {
   sql.query('INSERT INTO items set ?', newItem, function(err, res) {
     if (err) {
-      console.log('error: ', err);
       result(err, null);
     } else {
-      console.log(res.insertId);
       result(null, res.insertId);
     }
   });
@@ -27,10 +25,8 @@ Item.createItem = function(newItem, result) {
 Item.getAllItems = function(result) {
   sql.query('Select * from items', function(err, res) {
     if (err) {
-      console.log('error: ', err);
       result(null, err);
     } else {
-      console.log('items : ', res);
       result(null, res);
     }
   });
@@ -41,7 +37,6 @@ Item.getItemsByShopId = function(shopId, result) {
     res
   ) {
     if (err) {
-      console.log('error: ', err);
       result(err, null);
     } else {
       result(null, res);
@@ -63,7 +58,6 @@ Item.updateById = function(id, item, result) {
     ],
     function(err, res) {
       if (err) {
-        console.log('error: ', err);
         result(null, err);
       } else {
         result(null, res);
@@ -75,7 +69,6 @@ Item.updateById = function(id, item, result) {
 Item.remove = function(id, result) {
   sql.query('DELETE FROM items WHERE id = ?', [id], function(err, res) {
     if (err) {
-      console.log('error: ', err);
       result(null, err);
     } else {
       result(null, res);
