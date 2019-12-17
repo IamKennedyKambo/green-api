@@ -9,16 +9,13 @@ var Message = require('../model/NewsModel');
 
 exports.listUsers = function(req, res) {
   User.getUsers(function(err, user) {
-    console.log('controller');
     if (err) res.send(err);
-    console.log('res', user);
     res.send(user);
   });
 };
 
 exports.createUser = function(req, res) {
   var new_user = new User(req.body);
-  console.log(new_user);
 
   //handles null error
   if (!new_user || !new_user.email || !new_user.password) {
@@ -62,7 +59,6 @@ exports.authenticateUser = function(req, res) {
 
   User.loginUser(email, function(err, user) {
     if (err) {
-      console.log('error ocurred', error);
       res.status(400).send({
         isSuccessful: false,
         message: `error ocurred + ${err.code}`
@@ -152,9 +148,7 @@ exports.deleteUser = function(req, res) {
 //Shops
 exports.listShops = function(req, res) {
   Shop.getAllShops(function(err, shop) {
-    console.log('controller');
     if (err) res.send(err);
-    console.log('res', shop);
     res.status(200).send({ isSuccessful: true, shops: shop });
   });
 };
@@ -199,11 +193,9 @@ exports.deleteShop = function(req, res) {
 //Bins
 exports.listBins = function(req, res) {
   Bin.getBins(function(err, bin) {
-    console.log('controller');
     if (err) {
       res.send(err);
     } else {
-      console.log('res', bin);
       res.status(200).send({ isSuccessful: true, bins: bin });
     }
   });
@@ -249,9 +241,7 @@ exports.deleteBin = function(req, res) {
 //Products
 exports.listProducts = function(req, res) {
   Item.getItems(function(err, item) {
-    console.log('controller');
     if (err) res.send(err);
-    console.log('res', item);
     res.send({ isSuccessful: true, items: item });
   });
 };
@@ -296,9 +286,7 @@ exports.deleteProduct = function(req, res) {
 //Cart
 exports.listCarts = function(req, res) {
   Cart.getCart(function(err, item) {
-    console.log('controller');
     if (err) res.send(err);
-    console.log('res', item);
     res.send({ isSuccessful: true, items: item });
   });
 };
