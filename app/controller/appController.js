@@ -114,21 +114,6 @@ exports.updateById = function(req, res) {
   });
 };
 
-exports.updateByCard = function(req, res) {
-  var points = req.body.points;
-  var cardId = req.params.cardId;
-  User.updateByCard(cardId, points, function(err, user) {
-    if (err) {
-      res.send(err);
-    } else {
-      res.status(200).send({
-        isSuccessful: true,
-        user: user
-      });
-    }
-  });
-};
-
 var editUser = function(user, points) {
   var newUser = user;
   for (var i = 0; i < newUser.length; ++i) {

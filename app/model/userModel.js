@@ -8,8 +8,8 @@ var User = function(user) {
     (this.about = user.about),
     (this.latitude = user.latitude),
     (this.longitude = user.longitude),
-    (this.usable_points = user.usable_points),
-    (this.used_points = user.used_points),
+    // (this.usable_points = user.usable_points),
+    // (this.used_points = user.used_points),
     (this.level = user.level),
     (this.cardId = user.cardId);
 };
@@ -88,32 +88,6 @@ User.updateById = function(id, user, result) {
       }
     }
   );
-};
-
-User.updateByCard = function(cardId, points, result) {
-  sql.query('SELECT * from users where cardId = ?', [cardId], function(
-    err,
-    user
-  ) {
-    if (err) {
-      result(err, null);
-    } else {
-      user.forEach(element => {
-        var newUser = element;
-        for (var i = 0; i < newUser.length; ++i) {
-          var inc = newUser[i]['usable_points'];
-          newUser[i]['usable_points'] = inc + points;
-        }
-        User.updateById(element.id, newUser, function(err, res) {
-          if (err) {
-            result(err, null);
-          } else {
-            result(null, newUser);
-          }
-        });
-      });
-    }
-  });
 };
 
 User.remove = function(id, result) {
