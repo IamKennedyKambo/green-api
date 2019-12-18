@@ -6,10 +6,8 @@ var User = function(user) {
     (this.email = user.email),
     (this.password = user.password),
     (this.about = user.about),
-    (this.latitude = user.latitude),
-    (this.longitude = user.longitude),
-    // (this.usable_points = user.usable_points),
-    // (this.used_points = user.used_points),
+    (this.usable_points = user.usable_points),
+    (this.used_points = user.used_points),
     (this.level = user.level),
     (this.cardId = user.cardId);
 };
