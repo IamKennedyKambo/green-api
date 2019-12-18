@@ -17,6 +17,7 @@ var User = function(user) {
 User.createUser = function(newUser, result) {
   sql.query('INSERT INTO users set ? ', newUser, function(err, res) {
     if (err) {
+      console.log(err);
       result(err, null);
       return;
     } else {
